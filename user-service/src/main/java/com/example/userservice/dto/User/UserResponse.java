@@ -2,8 +2,10 @@ package com.example.userservice.dto.User;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserResponse {
+public class UserResponse implements Serializable {
     private Long id;
     private String name;
     private String email;
