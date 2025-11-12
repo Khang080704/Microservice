@@ -24,8 +24,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity createOrder(@RequestBody Order order) {
-        orderService.createOrder(order);
-        return ResponseEntity.ok().body(Map.of("message", "Order created"));
+        Order created = orderService.createOrder(order);
+        return ResponseEntity.ok().body(Map.of("message", "Order created" + created.toString()));
     }
 
     @GetMapping
