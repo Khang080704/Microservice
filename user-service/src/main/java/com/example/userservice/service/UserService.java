@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public boolean createUser(User newUser) throws Exception {
+    public boolean createUser(User newUser) {
         userRepository.save(newUser);
         return true;
     }
@@ -43,5 +44,9 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);
         return userResponse;
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

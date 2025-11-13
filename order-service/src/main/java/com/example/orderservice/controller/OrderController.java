@@ -2,11 +2,11 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.entity.Order;
-import com.example.orderservice.feignclient.UserClient;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +24,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity createOrder(@RequestBody Order order) {
+        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        order.setUserId(userId);
         Order created = orderService.createOrder(order);
         return ResponseEntity.ok().body(Map.of("message", "Order created" + created.toString()));
     }
@@ -34,7 +36,7 @@ public class OrderController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("{order_id}")
+    @GetMapping("/{order_id}")
     public ResponseEntity getOrderById(@PathVariable Long order_id) {
         OrderDto result = orderService.getOrderByOrderId(order_id);
         return ResponseEntity.ok().body(result);
