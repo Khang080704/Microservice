@@ -34,8 +34,9 @@ public class OrderService {
                 .userId(savedOrder.getUserId())
                 .Total(savedOrder.getPrice())
                 .build();
-        kafkaTemplate.send("order-topic", orderPlacedEvent);
-        System.out.println("Event sent to topic");
+        // Turn of kafka
+        // kafkaTemplate.send("order-topic", orderPlacedEvent);
+        // System.out.println("Event sent to topic");
         return savedOrder;
     }
 

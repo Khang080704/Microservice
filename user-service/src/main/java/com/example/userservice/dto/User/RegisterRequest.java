@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse implements Serializable {
+@AllArgsConstructor
+public class RegisterRequest {
+    private String email;
+    private String password;
     private String fullName;
     private String phoneNumber;
     private String address;

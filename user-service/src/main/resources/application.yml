@@ -4,17 +4,15 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:userdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://mainline.proxy.rlwy.net:46773/railway
+    password: hDUwteTvsuHWRWUefBhcqHFmfhCBJwlg
+    username: postgres
   jpa:
+    database: postgresql
+    show-sql: true
     hibernate:
       ddl-auto: update
-    show-sql: true
   cache:
     type: redis
   data:

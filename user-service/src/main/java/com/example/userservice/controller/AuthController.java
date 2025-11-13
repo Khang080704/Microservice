@@ -1,6 +1,9 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.dto.User.RegisterRequest;
+import com.example.userservice.entity.AuthUser;
 import com.example.userservice.entity.User;
+import com.example.userservice.service.AuthService;
 import com.example.userservice.service.JwtService;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final UserService userService;
+    private final AuthService authService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtService jwtService;
 
@@ -28,39 +32,29 @@ public class AuthController {
         String email = body.get("email");
         String password = body.get("password");
 
-        User user = userService.getUserByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+        AuthUser authUser = authService.getUserByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
-        if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
+        if(!bCryptPasswordEncoder.matches(password, authUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
         else {
-            String token = jwtService.generateToken(user);
-            return ResponseEntity.ok(Map.of("token", token));
+            String accessToken = jwtService.generateAccessToken(authUser.getUser().getFullName(), authUser.getUser().getId());
+            String refreshToken = jwtService.generateRefreshToken(authUser.getUser().getFullName(), authUser.getUser().getId());
+            return ResponseEntity.ok(Map.of("accessToken", accessToken, "refreshToken", refreshToken));
         }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> Register(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String password = body.get("password");
-        String name = body.get("name");
+    public ResponseEntity<?> Register(@RequestBody RegisterRequest registerRequest) {
+        String email = registerRequest.getEmail();
 
-        if (userService.getUserByEmail(email).isPresent()) {
+        if (authService.getUserByEmail(email).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already in use");
         }
         else {
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setPassword(bCryptPasswordEncoder.encode(password));
-            newUser.setName(name);
-
-            userService.createUser(newUser);
-
-            String token = jwtService.generateToken(newUser);
-            return ResponseEntity.ok(Map.of("token", token));
+            authService.createUser(registerRequest);
+            return ResponseEntity.ok(Map.of("message", "Register successful"));
         }
     }
-
-
 
 }

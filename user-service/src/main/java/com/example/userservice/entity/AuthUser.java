@@ -6,24 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Users")
-@Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+@AllArgsConstructor
+@Builder
+public class AuthUser {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String fullName;
-    private String phoneNumber;
-    private String address;
+    private String email;
+    private String password;
 
-    @OneToOne(mappedBy = "user")
-    private AuthUser authUser;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class JwtAuthFilter extends OncePerRequestFilter {
     private static final String SECRET_KEY = "my-very-long-and-secure-jwt-secret-key-123456";
@@ -33,7 +34,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Long userId = claims.get("userId", Long.class);
+        String userIdStr = claims.get("user_id", String.class);
+        UUID  userId = UUID.fromString(userIdStr);
 
         UsernamePasswordAuthenticationToken auth =
                 new UsernamePasswordAuthenticationToken(userId, null, List.of());

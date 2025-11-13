@@ -3,50 +3,33 @@ package com.example.userservice.service;
 import com.example.userservice.dto.User.UserResponse;
 import com.example.userservice.entity.User;
 import com.example.userservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final AuthService  authService;
 
-    @Autowired
-    public UserService(UserRepository userRepository,  ModelMapper modelMapper) {
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
+    public UserResponse getCurrentUser() {
+        UUID user_id = (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user =  userRepository.findById(user_id).orElse(null);
+        return new UserResponse(user.getFullName(), user.getPhoneNumber(), user.getAddress());
     }
 
-    public boolean createUser(User newUser) {
-        userRepository.save(newUser);
-        return true;
-    }
-
-    @Cacheable("allUsers")
-    public List<UserResponse> getAllUser() {
-        System.out.println("User service query");
-        List<User> users = userRepository.findAll();
-        List<UserResponse> userResponseList = new ArrayList<>();
-        for (User user : users) {
-            UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-            userResponseList.add(userResponse);
-        }
-        return userResponseList;
-    }
-
-    public UserResponse getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-        return userResponse;
-    }
-
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    @Transactional
+    public void DeleteAccount(String email) {
+        authService.deleteAccount(email);
     }
 }
