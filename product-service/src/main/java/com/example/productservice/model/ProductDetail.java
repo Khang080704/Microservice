@@ -1,28 +1,19 @@
 package com.example.productservice.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-@Document(collection = "Product")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Product {
-    @Id
-    private String id;
-    private String productName;
-    List<ProductDetail> details;
-
-    @DBRef
-    private Brand brand;
-
-    @DBRef
-    private Category category;
-
+@NoArgsConstructor
+@Builder
+public class ProductDetail {
+    private int quantity;
+    private String color;
+    private Double price;
 }
