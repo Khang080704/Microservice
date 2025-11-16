@@ -17,7 +17,12 @@ public class Product {
     @Id
     private String id;
     private String productName;
-    List<ProductDetail> details;
+
+    @DBRef
+    private List<Color> color;
+
+    @DBRef
+    private List<Size> size;
 
     @DBRef
     private Brand brand;

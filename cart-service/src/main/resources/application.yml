@@ -1,0 +1,8 @@
+server:
+  port: 3001
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://Cart_Service:Khangt119-22@cluster0.is9eqlp.mongodb.net/?appName=Cluster0
+      database: cart
