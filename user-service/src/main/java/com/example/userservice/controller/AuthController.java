@@ -38,8 +38,8 @@ public class AuthController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
         else {
-            String accessToken = jwtService.generateAccessToken(authUser.getUser().getFullName(), authUser.getUser().getId());
-            String refreshToken = jwtService.generateRefreshToken(authUser.getUser().getFullName(), authUser.getUser().getId());
+            String accessToken = jwtService.generateAccessToken(authUser.getUser().getFullName(), authUser.getUser().getId(), authUser.getRole());
+            String refreshToken = jwtService.generateRefreshToken(authUser.getUser().getFullName(), authUser.getUser().getId(), authUser.getRole());
             return ResponseEntity.ok(Map.of("accessToken", accessToken, "refreshToken", refreshToken));
         }
     }

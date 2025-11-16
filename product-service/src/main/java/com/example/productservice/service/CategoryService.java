@@ -23,4 +23,10 @@ public class CategoryService {
         Category category = categoryRepository.findByCategoryName(categoryName);
         return productRepository.findProductsByCategory(category);
     }
+
+    public Category addNewCategory(String categoryName) {
+        Category newCategory = new Category();
+        newCategory.setCategoryName(categoryName);
+        return categoryRepository.save(newCategory);
+    }
 }

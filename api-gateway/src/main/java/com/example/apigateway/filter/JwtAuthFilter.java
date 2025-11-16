@@ -54,10 +54,12 @@ public class JwtAuthFilter implements GlobalFilter {
                         .getBody();
 
                 String userIdStr = claims.get("user_id", String.class);
+                String role = claims.get("role", String.class);
 
                 // 3. Thêm header vào request
                 request = request.mutate()
                         .header("X-User-Id", userIdStr)
+                        .header("X-Role", role)
                         .build();
 
             } catch (ExpiredJwtException | SignatureException | MalformedJwtException e) {

@@ -21,6 +21,8 @@ public class AuthUser {
     private String email;
     private String password;
 
+    private String role = "USER";
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

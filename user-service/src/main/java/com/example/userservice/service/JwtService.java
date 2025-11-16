@@ -20,19 +20,21 @@ public class JwtService {
     private final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 15;  // 15 phút
     private final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 7 ngày
 
-    public String generateAccessToken(String userName, UUID user_id) {
+    public String generateAccessToken(String userName, UUID user_id, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("user_id", user_id);
-        return createToken(claims, userName,  ACCESS_TOKEN_EXPIRATION);
+        claims.put("role", role);
+        return createToken(claims, userName, ACCESS_TOKEN_EXPIRATION);
     }
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateRefreshToken(String userName, UUID user_id) {
+    public String generateRefreshToken(String userName, UUID user_id, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("user_id", user_id);
+        claims.put("role", role);
         return createToken(claims, userName, REFRESH_TOKEN_EXPIRATION);
     }
 
