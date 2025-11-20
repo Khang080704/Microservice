@@ -38,7 +38,8 @@ public class ProductService {
             Product currentProduct =  product.get();
             ProductDetailDto productDetailDto = new ProductDetailDto();
 
-            productDetailDto.setProductDetailList(currentProduct.getDetails());
+            productDetailDto.setColors(currentProduct.getColor());
+            productDetailDto.setSizes(currentProduct.getSize());
             productDetailDto.setProduct(ProductDto.builder().productId(currentProduct.getId())
                             .productName(currentProduct.getProductName())
                             .brandName(currentProduct.getBrand().getName())

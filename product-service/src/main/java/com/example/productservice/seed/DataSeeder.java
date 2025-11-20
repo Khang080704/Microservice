@@ -77,9 +77,10 @@ public class DataSeeder implements CommandLineRunner {
             Brand adidas = Brand.builder().name("Adidas").build();
             Brand gucci = Brand.builder().name("Gucci").build();
             Brand ikea = Brand.builder().name("IKEA").build();
+            Brand prenticeHall = Brand.builder().name("Prentice Hall").build();
 
             brandRepository.saveAll(List.of(apple,samsung,hp,dell, sony, lg, nike, adidas
-            , gucci,ikea));
+            , gucci,ikea, prenticeHall));
             log.info("Đã seed {} thương hiệu.", brandRepository.count());
 
             //Color seeding
@@ -107,10 +108,111 @@ public class DataSeeder implements CommandLineRunner {
             pr1.setBrand(apple);
             pr1.setCategory(smartPhone);
             pr1.setColor(List.of(
-                    Color.builder().color("red").build(),
-                    Color.builder().color("blue").build(),
-                    Color.builder().color("green").build()
+                    red, green, orange
             ));
+            pr1.setSize(List.of(
+                    s, m
+            ));
+
+            Product pr2 = new Product();
+            pr2.setProductName("Samsung Galaxy S24 Ultra");
+            pr2.setBrand(samsung);
+            pr2.setCategory(smartPhone);
+            pr2.setColor(List.of(
+                cyan, indigo, purple
+            ));
+            pr2.setSize(List.of(
+                l, xl
+            ));
+
+            Product pr3 = new Product();
+            pr3.setProductName("Dell XPS 15");
+            pr3.setBrand(dell);
+            pr3.setCategory(laptop);
+            pr3.setColor(List.of(
+                indigo // Màu bạc/xám thường dùng indigo đại diện nếu không có silver
+            ));
+            pr3.setSize(List.of(
+                xl
+            ));
+
+            Product pr4 = new Product();
+            pr4.setProductName("MacBook Pro M3");
+            pr4.setBrand(apple);
+            pr4.setCategory(laptop);
+            pr4.setColor(List.of(
+                indigo, cyan
+            ));
+            pr4.setSize(List.of(
+                m, l
+            ));
+
+            Product pr5 = new Product();
+            pr5.setProductName("Basic Cotton T-Shirt");
+            pr5.setBrand(adidas);
+            pr5.setCategory(clothes);
+            pr5.setColor(List.of(
+                red, orange, yellow, green, cyan, indigo, purple
+            ));
+            pr5.setSize(List.of(
+                s, m, l, xl
+            ));
+
+            Product pr6 = new Product();
+            pr6.setProductName("Nike Air Jordan High");
+            pr6.setBrand(nike);
+            pr6.setCategory(sneaker);
+            pr6.setColor(List.of(
+                red, orange
+            ));
+            pr6.setSize(List.of(
+                m, l, xl
+            ));
+
+            Product pr7 = new Product();
+            pr7.setProductName("Clean Code");
+            pr7.setBrand(prenticeHall);
+            pr7.setCategory(books);
+
+            Product pr8 = new Product();
+            pr8.setProductName("Harry Potter and the Sorcerer's Stone");
+            pr8.setBrand(prenticeHall);
+            pr8.setCategory(books);
+
+// Product 9: Đồng hồ thông minh
+            Product pr9 = new Product();
+            pr9.setProductName("Apple Watch Series 9");
+            pr9.setBrand(apple);
+            pr9.setCategory(smartWatch);
+            pr9.setColor(List.of(
+                red, green, indigo
+            ));
+            pr9.setSize(List.of(
+                s, m
+            ));
+
+            Product pr10 = new Product();
+            pr10.setProductName("iPad Air 5");
+            pr10.setBrand(apple);
+            pr10.setCategory(tablet);
+            pr10.setColor(List.of(
+                purple, cyan, indigo
+            ));
+            pr10.setSize(List.of(
+                m
+            ));
+
+            Product pr11 = new Product();
+            pr11.setProductName("JBL Flip 6");
+            pr11.setBrand(samsung);
+            pr11.setCategory(furniture);
+            pr11.setColor(List.of(
+                red, cyan, green
+            ));
+
+        productRepository.saveAll(List.of(
+                pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11
+        ));
 
 
             productRepository.saveAll(List.of(pr1));
