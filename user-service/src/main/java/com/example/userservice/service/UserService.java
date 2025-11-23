@@ -25,7 +25,7 @@ public class UserService {
     public UserResponse getCurrentUser() {
         UUID user_id = (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user =  userRepository.findById(user_id).orElse(null);
-        return new UserResponse(user.getFullName(), user.getPhoneNumber(), user.getAddress());
+        return new UserResponse(user.getId(),user.getFullName(), user.getPhoneNumber(), user.getAddress());
     }
 
     @Transactional

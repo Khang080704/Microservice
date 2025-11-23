@@ -113,6 +113,8 @@ public class DataSeeder implements CommandLineRunner {
             pr1.setSize(List.of(
                     s, m
             ));
+            pr1.setPrice(150.500);
+            pr1.setStock(10);
 
             Product pr2 = new Product();
             pr2.setProductName("Samsung Galaxy S24 Ultra");
@@ -124,6 +126,8 @@ public class DataSeeder implements CommandLineRunner {
             pr2.setSize(List.of(
                 l, xl
             ));
+            pr2.setPrice(240.500);
+            pr2.setStock(100);
 
             Product pr3 = new Product();
             pr3.setProductName("Dell XPS 15");
@@ -135,6 +139,8 @@ public class DataSeeder implements CommandLineRunner {
             pr3.setSize(List.of(
                 xl
             ));
+            pr3.setPrice(150.500);
+            pr3.setStock(100);
 
             Product pr4 = new Product();
             pr4.setProductName("MacBook Pro M3");
@@ -146,6 +152,8 @@ public class DataSeeder implements CommandLineRunner {
             pr4.setSize(List.of(
                 m, l
             ));
+            pr4.setPrice(150.500);
+            pr4.setStock(50);
 
             Product pr5 = new Product();
             pr5.setProductName("Basic Cotton T-Shirt");
@@ -157,6 +165,8 @@ public class DataSeeder implements CommandLineRunner {
             pr5.setSize(List.of(
                 s, m, l, xl
             ));
+            pr5.setStock(17);
+            pr5.setPrice(150.500);
 
             Product pr6 = new Product();
             pr6.setProductName("Nike Air Jordan High");
@@ -168,16 +178,22 @@ public class DataSeeder implements CommandLineRunner {
             pr6.setSize(List.of(
                 m, l, xl
             ));
+            pr6.setStock(1);
+            pr6.setPrice(150.500);
 
             Product pr7 = new Product();
             pr7.setProductName("Clean Code");
             pr7.setBrand(prenticeHall);
             pr7.setCategory(books);
+            pr7.setStock(3);
+            pr7.setPrice(150.500);
 
             Product pr8 = new Product();
             pr8.setProductName("Harry Potter and the Sorcerer's Stone");
             pr8.setBrand(prenticeHall);
             pr8.setCategory(books);
+            pr8.setStock(2);
+            pr8.setPrice(250.500);
 
 // Product 9: Đồng hồ thông minh
             Product pr9 = new Product();
@@ -190,6 +206,8 @@ public class DataSeeder implements CommandLineRunner {
             pr9.setSize(List.of(
                 s, m
             ));
+            pr9.setStock(13);
+            pr9.setPrice(150.500);
 
             Product pr10 = new Product();
             pr10.setProductName("iPad Air 5");
@@ -201,6 +219,8 @@ public class DataSeeder implements CommandLineRunner {
             pr10.setSize(List.of(
                 m
             ));
+            pr10.setStock(0);
+            pr10.setPrice(150.500);
 
             Product pr11 = new Product();
             pr11.setProductName("JBL Flip 6");
@@ -209,6 +229,8 @@ public class DataSeeder implements CommandLineRunner {
             pr11.setColor(List.of(
                 red, cyan, green
             ));
+            pr11.setPrice(900.001);
+            pr11.setStock(1);
 
         productRepository.saveAll(List.of(
                 pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11

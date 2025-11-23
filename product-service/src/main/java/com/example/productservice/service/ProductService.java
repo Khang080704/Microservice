@@ -26,6 +26,7 @@ public class ProductService {
                     .productName(product.getProductName())
                     .categoryName(product.getCategory().getCategoryName())
                     .brandName(product.getBrand().getName())
+                    .price(product.getPrice())
                     .build();
             productDtos.add(productDto);
         }
@@ -44,6 +45,8 @@ public class ProductService {
                             .productName(currentProduct.getProductName())
                             .brandName(currentProduct.getBrand().getName())
                             .categoryName(currentProduct.getCategory().getCategoryName())
+                            .price(currentProduct.getPrice())
+                            .stock(currentProduct.getStock())
                             .build());
             return productDetailDto;
         }

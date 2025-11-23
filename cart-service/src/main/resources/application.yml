@@ -6,3 +6,10 @@ spring:
     mongodb:
       uri: mongodb+srv://Cart_Service:Khangt119-22@cluster0.is9eqlp.mongodb.net/?appName=Cluster0
       database: cart
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
