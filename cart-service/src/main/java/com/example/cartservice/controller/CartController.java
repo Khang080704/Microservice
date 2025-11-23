@@ -26,7 +26,17 @@ public class CartController {
     @GetMapping
     public ResponseEntity<?> getCart(@RequestBody Map<String,String> body) {
         String userId = body.get("userId");
-        List<CartItem> result = cartService.getAllItemsInCart(userId);
-        return ResponseEntity.ok().body(result);
+        Cart result = cartService.getAllItemsInCart(userId);
+        return ResponseEntity.ok().body(Map.of("user_id", userId, "items", result.getItems(),
+                "totalPrice", result.calculateTotalPrice(),
+                "totalQuantity", result.calculateTotalQuantity()));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteProductInCart(@RequestBody Map<String,String> body) {
+        String userId = body.get("userId");
+        String productId = body.get("productId");
+        cartService.removeProductFromCart(productId, userId);
+        return ResponseEntity.ok().body(Map.of("message", "remove successfully"));
     }
 }

@@ -24,4 +24,17 @@ public class Cart {
     private int totalQuantity;
     private double totalPrice;
 
+    public double calculateTotalPrice() {
+        for (CartItem item : items) {
+            totalPrice += item.getPrice() * item.getQuantity();
+        }
+        return totalPrice;
+    }
+    public int calculateTotalQuantity() {
+        for (CartItem item : items) {
+            totalQuantity += item.getQuantity();
+        }
+        return totalQuantity;
+    }
+
 }

@@ -24,11 +24,9 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        categoryRepository.deleteAll();
-        brandRepository.deleteAll();
-        productRepository.deleteAll();
-        colorRepository.deleteAll();
-        sizeRepository.deleteAll();
+        if(productRepository.count() != 0) {
+            return;
+        }
 
 
             // 1. Category seeding

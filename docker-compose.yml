@@ -1,5 +1,6 @@
-services:
+name: e-commerce-stack
 
+services:
   #MySql database
   my-sql:
     image: mysql
