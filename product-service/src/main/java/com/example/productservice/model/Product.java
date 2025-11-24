@@ -17,7 +17,6 @@ public class Product {
     @Id
     private String id;
     private String productName;
-    private int stock;
     private Double price;
 
     @DBRef

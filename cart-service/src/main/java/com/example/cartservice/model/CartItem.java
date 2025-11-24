@@ -20,7 +20,6 @@ public class CartItem {
 
     private String productName;
     private double price;
-    private int stockAtAdd;
 
     private String colorId;
     private String sizeId;
@@ -28,14 +27,10 @@ public class CartItem {
     public void map(ProductResponse productResponse, String colorId, String sizeId, int quantity) {
         this.productId = productResponse.getProduct().getProductId();
         this.price = productResponse.getProduct().getPrice();
-        this.stockAtAdd = productResponse.getProduct().getStock();
         this.productName = productResponse.getProduct().getProductName();
 
         this.colorId = colorId;
         this.sizeId = sizeId;
         this.quantity = quantity;
-
     }
-
-
 }

@@ -26,7 +26,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<?> findAll() {
         List<ProductDto> products = productService.findAll();
-        return ResponseEntity.ok().body(Map.of("products", products));
+        return ResponseEntity.ok().body(products);
     }
 
     @GetMapping("/search")

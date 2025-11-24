@@ -46,7 +46,6 @@ public class ProductService {
                             .brandName(currentProduct.getBrand().getName())
                             .categoryName(currentProduct.getCategory().getCategoryName())
                             .price(currentProduct.getPrice())
-                            .stock(currentProduct.getStock())
                             .build());
             return productDetailDto;
         }
