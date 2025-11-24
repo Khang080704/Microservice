@@ -10,7 +10,6 @@ spring:
           predicates:
             - Path=/api/users/**, /api/auth/**
 
-
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -25,6 +24,12 @@ spring:
           uri: lb://cart-service
           predicates:
             - Path= /api/cart/**
+
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/**
+
 
 
 eureka:
