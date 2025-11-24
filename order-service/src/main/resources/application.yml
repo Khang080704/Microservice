@@ -13,3 +13,12 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.add.type.headers: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/order-service
+    username: khang
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

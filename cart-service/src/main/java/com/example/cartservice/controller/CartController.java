@@ -6,10 +6,13 @@ import com.example.cartservice.model.CartItem;
 import com.example.cartservice.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -32,11 +35,19 @@ public class CartController {
                 "totalQuantity", result.calculateTotalQuantity()));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteProductInCart(@RequestBody Map<String,String> body) {
-        String userId = body.get("userId");
-        String productId = body.get("productId");
-        cartService.removeProductFromCart(productId, userId);
+    @DeleteMapping("/{product_id}")
+    @Transactional
+    public ResponseEntity<?> deleteProductInCart(@PathVariable("product_id") String productId) {
+        UUID userId = (UUID) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        cartService.removeProductFromCart(productId, userId.toString());
         return ResponseEntity.ok().body(Map.of("message", "remove successfully"));
+    }
+
+    @DeleteMapping
+    @Transactional
+    public ResponseEntity<?> deleteAllProduct() {
+        Object userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        cartService.removeAllProduct(userId.toString());
+        return ResponseEntity.ok().body(Map.of("message", "delete all successfully"));
     }
 }

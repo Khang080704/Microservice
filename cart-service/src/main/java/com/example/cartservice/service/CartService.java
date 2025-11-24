@@ -32,9 +32,7 @@ public class CartService {
 
         Optional<CartItem> productExists = cart.getItems().stream()
                 .filter(item ->
-                        item.getProductId().equals(product.getProduct().getProductId()) &&
-                                item.getColorId().equals(request.getColorId()) &&
-                                item.getSizeId().equals(request.getSizeId()))
+                        item.getProductId().equals(product.getProductId()))
                 .findFirst();
 
         if(productExists.isPresent()){
@@ -43,7 +41,7 @@ public class CartService {
         }
         else {
             CartItem item = new CartItem();
-            item.map(product, request.getColorId(), request.getSizeId(), request.getQuantity());
+            item.map(product, request.getQuantity());
             cart.getItems().add(item);
         }
 
@@ -67,6 +65,17 @@ public class CartService {
         }
         else {
             cart.getItems().removeIf(item -> item.getProductId().equals(productId));
+            cartRepository.save(cart);
+        }
+    }
+
+    public void removeAllProduct(String userId){
+        Cart cart = cartRepository.findCartByUserId(userId);
+        if(cart == null){
+            return;
+        }
+        else {
+            cart.getItems().clear();
             cartRepository.save(cart);
         }
     }

@@ -19,12 +19,10 @@ public class DataSeeder implements CommandLineRunner {
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final ProductRepository productRepository;
-    private final ColorRepository colorRepository;
-    private final SizeRepository sizeRepository;
 
     @Override
     public void run(String... args) throws Exception {
-
+        productRepository.deleteAll();
         if(productRepository.count() != 0) {
             return;
         }
@@ -82,23 +80,6 @@ public class DataSeeder implements CommandLineRunner {
             , gucci,ikea, prenticeHall));
             log.info("Đã seed {} thương hiệu.", brandRepository.count());
 
-            //Color seeding
-            Color red = Color.builder().color("red").build();
-            Color orange = Color.builder().color("orange").build();
-            Color yellow = Color.builder().color("yellow").build();
-            Color green = Color.builder().color("green").build();
-            Color cyan = Color.builder().color("cyan").build();
-            Color indigo = Color.builder().color("indigo").build();
-            Color purple = Color.builder().color("purple").build();
-            colorRepository.saveAll(List.of(red,orange,yellow,green,cyan, indigo,purple));
-
-            // Size seeding
-            Size s = Size.builder().size("small").build();
-            Size m = Size.builder().size("medium").build();
-            Size l = Size.builder().size("large").build();
-            Size xl = Size.builder().size("xlarge").build();
-            sizeRepository.saveAll(List.of(s, m, l, xl));
-
 
             // 3. Product seeding
             // Product 1
@@ -106,79 +87,50 @@ public class DataSeeder implements CommandLineRunner {
             pr1.setProductName("Iphone 15 pro max");
             pr1.setBrand(apple);
             pr1.setCategory(smartPhone);
-            pr1.setColor(List.of(
-                    red, green, orange
-            ));
-            pr1.setSize(List.of(
-                    s, m
-            ));
             pr1.setPrice(150.500);
+            pr1.setDescription(pr1.getProductName() + " is the best");
 
             Product pr2 = new Product();
             pr2.setProductName("Samsung Galaxy S24 Ultra");
             pr2.setBrand(samsung);
             pr2.setCategory(smartPhone);
-            pr2.setColor(List.of(
-                cyan, indigo, purple
-            ));
-            pr2.setSize(List.of(
-                l, xl
-            ));
             pr2.setPrice(240.500);
+            pr2.setDescription(pr2.getProductName() + " is the best");
 
             Product pr3 = new Product();
             pr3.setProductName("Dell XPS 15");
             pr3.setBrand(dell);
             pr3.setCategory(laptop);
-            pr3.setColor(List.of(
-                indigo // Màu bạc/xám thường dùng indigo đại diện nếu không có silver
-            ));
-            pr3.setSize(List.of(
-                xl
-            ));
             pr3.setPrice(150.500);
+            pr3.setDescription(pr3.getProductName() + " is the best");
 
             Product pr4 = new Product();
             pr4.setProductName("MacBook Pro M3");
             pr4.setBrand(apple);
             pr4.setCategory(laptop);
-            pr4.setColor(List.of(
-                indigo, cyan
-            ));
-            pr4.setSize(List.of(
-                m, l
-            ));
             pr4.setPrice(150.500);
+            pr4.setDescription(pr4.getProductName() + " is the best");
 
             Product pr5 = new Product();
             pr5.setProductName("Basic Cotton T-Shirt");
             pr5.setBrand(adidas);
             pr5.setCategory(clothes);
-            pr5.setColor(List.of(
-                red, orange, yellow, green, cyan, indigo, purple
-            ));
-            pr5.setSize(List.of(
-                s, m, l, xl
-            ));
             pr5.setPrice(150.500);
+            pr5.setDescription(pr5.getProductName() + " is the best");
 
             Product pr6 = new Product();
             pr6.setProductName("Nike Air Jordan High");
             pr6.setBrand(nike);
             pr6.setCategory(sneaker);
-            pr6.setColor(List.of(
-                red, orange
-            ));
-            pr6.setSize(List.of(
-                m, l, xl
-            ));
             pr6.setPrice(150.500);
+            pr6.setDescription(pr6.getProductName() + " is the best");
 
             Product pr7 = new Product();
             pr7.setProductName("Clean Code");
             pr7.setBrand(prenticeHall);
             pr7.setCategory(books);
             pr7.setPrice(150.500);
+            pr7.setDescription(pr7.getProductName() + " is the best");
 
             Product pr8 = new Product();
             pr8.setProductName("Harry Potter and the Sorcerer's Stone");
@@ -191,34 +143,22 @@ public class DataSeeder implements CommandLineRunner {
             pr9.setProductName("Apple Watch Series 9");
             pr9.setBrand(apple);
             pr9.setCategory(smartWatch);
-            pr9.setColor(List.of(
-                red, green, indigo
-            ));
-            pr9.setSize(List.of(
-                s, m
-            ));
             pr9.setPrice(150.500);
+            pr9.setDescription(pr9.getProductName() + " is the best");
 
             Product pr10 = new Product();
             pr10.setProductName("iPad Air 5");
             pr10.setBrand(apple);
             pr10.setCategory(tablet);
-            pr10.setColor(List.of(
-                purple, cyan, indigo
-            ));
-            pr10.setSize(List.of(
-                m
-            ));
             pr10.setPrice(150.500);
+            pr10.setDescription(pr10.getProductName() + " is the best");
 
             Product pr11 = new Product();
             pr11.setProductName("JBL Flip 6");
             pr11.setBrand(samsung);
             pr11.setCategory(furniture);
-            pr11.setColor(List.of(
-                red, cyan, green
-            ));
             pr11.setPrice(900.001);
+            pr11.setDescription(pr11.getProductName() + " is the best");
 
         productRepository.saveAll(List.of(
                 pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11

@@ -19,7 +19,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String userIdStr = request.getHeader("X-User-Id");
         String role = request.getHeader("X-Role");
 
-        if(userIdStr == null || role == null){
+        if(userIdStr == null){
             filterChain.doFilter(request,response);
             return;
         }

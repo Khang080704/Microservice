@@ -19,13 +19,17 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        inventoryRepository.deleteAll();
+        if(inventoryRepository.count() != 0) {
+            return;
+        }
         List<ProductResponse> products = productClient.getProducts();
         final int MIN = 1;
         final int MAX = 100;
         for (ProductResponse product : products) {
             Random random = new Random();
 
-            Inventory  inventory = new Inventory();
+            Inventory inventory = new Inventory();
             inventory.setProductId(product.getProductId());
             inventory.setStock(random.nextInt(MAX - MIN + 1) + MIN);
             inventoryRepository.save(inventory);

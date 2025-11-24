@@ -1,6 +1,7 @@
 package com.example.productservice.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,17 +14,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Product {
     @Id
     private String id;
     private String productName;
     private Double price;
+    private String description;
 
-    @DBRef
-    private List<Color> color;
-
-    @DBRef
-    private List<Size> size;
 
     @DBRef
     private Brand brand;

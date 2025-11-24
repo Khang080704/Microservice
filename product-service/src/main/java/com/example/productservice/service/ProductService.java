@@ -1,9 +1,7 @@
 package com.example.productservice.service;
 
-import com.example.productservice.dto.ProductDetailDto;
 import com.example.productservice.dto.ProductDto;
 import com.example.productservice.model.Product;
-import com.example.productservice.model.ProductDetail;
 import com.example.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,7 @@ public class ProductService {
                     .productName(product.getProductName())
                     .categoryName(product.getCategory().getCategoryName())
                     .brandName(product.getBrand().getName())
+                    .description(product.getDescription())
                     .price(product.getPrice())
                     .build();
             productDtos.add(productDto);
@@ -33,21 +32,19 @@ public class ProductService {
         return productDtos;
     }
 
-    public ProductDetailDto getProductDetail(String productId) {
+    public ProductDto getProductDetail(String productId) {
         Optional<Product> product = productRepository.findById(productId);
         if(product.isPresent()) {
-            Product currentProduct =  product.get();
-            ProductDetailDto productDetailDto = new ProductDetailDto();
+            Product currentProduct = product.get();
 
-            productDetailDto.setColors(currentProduct.getColor());
-            productDetailDto.setSizes(currentProduct.getSize());
-            productDetailDto.setProduct(ProductDto.builder().productId(currentProduct.getId())
-                            .productName(currentProduct.getProductName())
-                            .brandName(currentProduct.getBrand().getName())
-                            .categoryName(currentProduct.getCategory().getCategoryName())
-                            .price(currentProduct.getPrice())
-                            .build());
-            return productDetailDto;
+            return ProductDto.builder()
+                    .productId(currentProduct.getId())
+                    .productName(currentProduct.getProductName())
+                    .brandName(currentProduct.getBrand().getName())
+                    .categoryName(currentProduct.getCategory().getCategoryName())
+                    .description(currentProduct.getDescription())
+                    .price(currentProduct.getPrice())
+                    .build();
         }
         else {
             return null;

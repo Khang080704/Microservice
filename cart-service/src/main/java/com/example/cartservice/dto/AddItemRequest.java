@@ -14,6 +14,4 @@ public class AddItemRequest {
     private String userId;
     private String productId;
     private int quantity;
-    private String colorId;
-    private String sizeId;
 }
