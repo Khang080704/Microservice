@@ -1,32 +1,94 @@
 name: e-commerce-stack
 
 services:
-  #Inventory bd
-  inventory-db:
-    image: postgres:15
-    container_name: inventory-db
+  # Discovery
+  discovery-server:
+    build:
+      context: ./discovery-server
+      dockerfile: Dockerfile
+    container_name: discovery-server
     ports:
-      - "5432:5432"
+      - "8761:8761"
+    networks:
+      - e-commerce-network
+
+
+  # User service
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
     environment:
-      POSTGRES_USER: khang
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: inventory
-    volumes:
-      - inventory-data:/var/lib/postgresql/data
+      DISCOVERY_SERVER: http://discovery-server:8761/eureka
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - discovery-server
+    networks:
+      - e-commerce-network
+
+  #Produc service
+  product-service:
+    build:
+      context: ./product-service
+      dockerfile: Dockerfile
+    env_file:
+      - product-service/.env
+    container_name: product-service
+    depends_on:
+      - discovery-server
+    networks:
+      - e-commerce-network
+    ports:
+      - "3000:3000"
+
+  #Api gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    env_file:
+      - api-gateway/.env
+    environment:
+      DISCOVERY_SERVER: http://discovery-server:8761/eureka
+    container_name: api-gateway
+    ports:
+      - "8083:8083"
+    depends_on:
+      - discovery-server
+    networks:
+      - e-commerce-network
+
+networks:
+  e-commerce-network:
+    driver: bridge
+  #Inventory bd
+#  inventory-db:
+#    image: postgres:15
+#    container_name: inventory-db
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_USER: khang
+#      POSTGRES_PASSWORD: 123456
+#      POSTGRES_DB: inventory
+#    volumes:
+#      - inventory-data:/var/lib/postgresql/data
 
   #Order database
-  order-db:
-    image: mysql
-    container_name: order-db
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: order-service
-      MYSQL_USER: khang
-      MYSQL_PASSWORD: password
-    volumes:
-      - mysql-data:/var/lib/mysql
+#  order-db:
+#    image: mysql
+#    container_name: order-db
+#    ports:
+#      - "3306:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: order-service
+#      MYSQL_USER: khang
+#      MYSQL_PASSWORD: password
+#    volumes:
+#      - mysql-data:/var/lib/mysql
 
   #Cache redis
 #  redis:
