@@ -22,14 +22,15 @@ public class CartController {
 
     @PostMapping
     public ResponseEntity<?> createCart(@RequestBody AddItemRequest cart) {
-        cartService.addProductToCart(cart);
+        Object userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        cartService.addProductToCart(cart, userId.toString());
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<?> getCart(@RequestBody Map<String,String> body) {
-        String userId = body.get("userId");
-        Cart result = cartService.getAllItemsInCart(userId);
+    public ResponseEntity<?> getCart() {
+        Object userId = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Cart result = cartService.getAllItemsInCart(userId.toString());
         return ResponseEntity.ok().body(Map.of("user_id", userId, "items", result.getItems(),
                 "totalPrice", result.calculateTotalPrice(),
                 "totalQuantity", result.calculateTotalQuantity()));

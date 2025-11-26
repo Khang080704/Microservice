@@ -19,7 +19,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        inventoryRepository.deleteAll();
         if(inventoryRepository.count() != 0) {
             return;
         }

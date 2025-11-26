@@ -22,7 +22,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        productRepository.deleteAll();
         if(productRepository.count() != 0) {
             return;
         }
@@ -137,6 +136,7 @@ public class DataSeeder implements CommandLineRunner {
             pr8.setBrand(prenticeHall);
             pr8.setCategory(books);
             pr8.setPrice(250.500);
+            pr8.setDescription(pr8.getProductName() + " is the best");
 
 // Product 9: Đồng hồ thông minh
             Product pr9 = new Product();

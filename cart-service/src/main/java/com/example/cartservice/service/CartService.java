@@ -19,10 +19,10 @@ public class CartService {
     private final CartRepository cartRepository;
     private final ProductClient productClient;
 
-    public void addProductToCart(AddItemRequest request) {
-        Cart cart = cartRepository.findCartByUserId(request.getUserId());
+    public void addProductToCart(AddItemRequest request, String userId) {
+        Cart cart = cartRepository.findCartByUserId(userId);
         if(cart == null){
-            cart = Cart.builder().userId(request.getUserId())
+            cart = Cart.builder().userId(userId)
                             .items(new ArrayList<>())
                             .totalPrice(0)
                             .totalQuantity(0)

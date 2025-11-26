@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 @NoArgsConstructor
 @Builder
 public class AddItemRequest {
-    private String userId;
     private String productId;
     private int quantity;
 }

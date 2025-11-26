@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/inventory
-    password: 123456
-    username: khang
+    url: ${PG_URI}
+    password: ${PG_PASSWORD}
+    username: ${PB_USERNAME}
   jpa:
     database: postgresql
     show-sql: true
@@ -16,6 +16,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${DISCOVERY_SERVER:http://localhost:8761/eureka}
   instance:
     prefer-ip-address: true
