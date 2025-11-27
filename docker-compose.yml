@@ -32,9 +32,7 @@ services:
 
   # Discovery
   discovery-server:
-    build:
-      context: ./discovery-server
-      dockerfile: Dockerfile
+    image: khang080704/discovery-server:latest
     container_name: discovery-server
     ports:
       - "8761:8761"
@@ -43,9 +41,7 @@ services:
 
   # User service
   user-service:
-    build:
-      context: ./user-service
-      dockerfile: Dockerfile
+    image: khang080704/user-service:latest
     environment:
       DISCOVERY_SERVER: http://discovery-server:8761/eureka
     container_name: user-service
@@ -101,9 +97,7 @@ services:
 
   #Api gateway
   api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
+    image: khang080704/api-gateway:latest
     env_file:
       - api-gateway/.env
     environment:
