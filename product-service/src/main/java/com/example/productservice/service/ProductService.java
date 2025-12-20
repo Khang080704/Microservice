@@ -4,6 +4,9 @@ import com.example.productservice.dto.ProductDto;
 import com.example.productservice.model.Product;
 import com.example.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,21 +18,19 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public List<ProductDto> findAll() {
-        List<Product> products = productRepository.findAll();
-        List<ProductDto> productDtos = new ArrayList<>();
-        for (Product product : products) {
-            ProductDto productDto = ProductDto.builder()
-                    .productId(product.getId())
-                    .productName(product.getProductName())
-                    .categoryName(product.getCategory().getCategoryName())
-                    .brandName(product.getBrand().getName())
-                    .description(product.getDescription())
-                    .price(product.getPrice())
-                    .build();
-            productDtos.add(productDto);
-        }
-        return productDtos;
+    public PagedModel<Product> findAll(Pageable pageable) {
+        Page<Product> products = productRepository.findAll(pageable);
+
+        products.map(product -> ProductDto.builder()
+                .productId(product.getId())
+                .price(product.getPrice())
+                .productName(product.getProductName())
+                .description(product.getDescription())
+                .categoryName(product.getCategory().getCategoryName())
+                .brandName(product.getBrand().getName())
+                .build());
+
+        return new PagedModel<>(products);
     }
 
     public ProductDto getProductDetail(String productId) {

@@ -5,6 +5,9 @@ import com.example.productservice.model.Product;
 import com.example.productservice.repository.CategoryRepository;
 import com.example.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +22,10 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public List<Product> getAllProductFromCategory(String categoryName){
+    public PagedModel<Product> getAllProductFromCategory(String categoryName, Pageable pageable) {
         Category category = categoryRepository.findByCategoryName(categoryName);
-        return productRepository.findProductsByCategory(category);
+        Page<Product> products = productRepository.findByCategory(category, pageable);
+        return new PagedModel<>(products);
     }
 
     public Category addNewCategory(String categoryName) {
